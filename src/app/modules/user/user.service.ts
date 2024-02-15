@@ -22,6 +22,26 @@ const createUserIntoDB = async (payload: TUser) => {
   return result;
 };
 
+const TotalUserIntoDB = async () => {
+  const result = User.find();
+  return result;
+};
+
+const TodayUserIntoDB = async () => {
+  const today = new Date();
+  today.setHours(0, 0, 0, 0);
+  const result = await User.find({
+    createdAt: {
+      $gte: today,
+    }
+  });
+  return result;
+};
+
+
+
 export const userservise = {
   createUserIntoDB,
+  TotalUserIntoDB,
+  TodayUserIntoDB
 };

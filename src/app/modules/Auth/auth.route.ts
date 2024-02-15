@@ -15,6 +15,16 @@ router.post(
   UserControllers.createUser,
 );
 
+router.get(
+  '/TotalUser',
+  UserControllers.totalUser,
+);
+
+router.get(
+  '/TodayUser',
+  UserControllers.todayUser,
+);
+
 router.post(
   '/login',
   validateRequest(AuthValidation.loginValidationSchema),
