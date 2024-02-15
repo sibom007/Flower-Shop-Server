@@ -4,6 +4,7 @@ import bcrypt from 'bcrypt';
 import { USER_ROLE } from './user.constant';
 import { ObjectId } from 'mongoose';
 
+
 const userSchema = new Schema<TUser, UserModel>(
   {
     username: { type: String, required: true, unique: true },
@@ -17,9 +18,10 @@ const userSchema = new Schema<TUser, UserModel>(
       required: true,
       select: 0,
     },
+    needPasswordChange: { type: Boolean, },
     role: {
       type: String,
-      enum: [USER_ROLE.user],
+      enum: [USER_ROLE.user, USER_ROLE.manager],
     },
     passwordHistory: [
       {

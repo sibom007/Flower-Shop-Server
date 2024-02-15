@@ -7,11 +7,12 @@ export interface TUser {
   username: string;
   email: string;
   password: string;
-  role: 'user';
+  role: 'user' | "manager";
   passwordHistory: {
     passwordHash: string;
     timestamp: Date;
   }[];
+  needPasswordChange: boolean
   createdAt?: Date;
   updatedAt?: Date;
 }

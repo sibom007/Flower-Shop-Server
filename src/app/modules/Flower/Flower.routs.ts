@@ -9,11 +9,11 @@ const router = express.Router();
 
 router.post(
   '/',
-  auth(USER_ROLE.user),
+  auth(USER_ROLE.manager),
   validateRequest(Flowerzodvalidation.FlowerSchemaValidations),
   FlowerControllers.createFlower,
 );
-router.get('/', auth(USER_ROLE.user), FlowerControllers.getallFlower);
+router.get('/', auth(USER_ROLE.user, USER_ROLE.manager), FlowerControllers.getallFlower);
 router.get(
   '/AlldeletedFlower',
   auth(USER_ROLE.user),
@@ -22,12 +22,12 @@ router.get(
 
 router.patch(
   '/:id',
-  auth(USER_ROLE.user),
+  auth(USER_ROLE.manager),
   validateRequest(Flowerzodvalidation.UpdateFlowerSchemaValidations),
   FlowerControllers.updateFlower,
 );
-router.put('/:id', auth(USER_ROLE.user), FlowerControllers.deleteFlower);
-router.put('/', auth(USER_ROLE.user), FlowerControllers.BulkDeleteFlower);
+router.put('/:id', auth(USER_ROLE.manager), FlowerControllers.deleteFlower);
+router.put('/', auth(USER_ROLE.manager), FlowerControllers.BulkDeleteFlower);
 router.get(
   '/userId/:id',
   auth(USER_ROLE.user),

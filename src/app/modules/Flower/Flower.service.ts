@@ -5,7 +5,6 @@ import { Flowermodel } from './Flower.model';
 import AppError from '../../errors/AppError';
 import httpStatus from 'http-status';
 import mongoose from 'mongoose';
-
 const createFlowerIntoDB = async (payload: TFlower, userdata: JwtPayload) => {
   const user = await User.findOne({ username: userdata.username });
   payload.createdBy = user?._id;
@@ -17,16 +16,24 @@ const createFlowerIntoDB = async (payload: TFlower, userdata: JwtPayload) => {
 const getFlowerIntoDB = async (filters: Record<string, any>) => {
   const query: any = { isDeleted: false };
 
+
   if (filters.price) {
-    query.price = filters.price;
+    if (!isNaN(filters.price)) {
+      query.price = filters.price;
+    } else {
+      throw new Error('Price must be a number');
+    }
   }
 
   if (filters.bloomDate) {
     query.bloomDate = filters.bloomDate;
   }
 
+ 
+
   if (filters.color) {
-    query.color = filters.color;
+    const lowercaseColor = filters.color.toLowerCase();
+    query.color = lowercaseColor;
   }
 
   if (filters.type) {
@@ -40,6 +47,9 @@ const getFlowerIntoDB = async (filters: Record<string, any>) => {
   if (filters.fragrance) {
     query.fragrance = filters.fragrance;
   }
+
+
+
 
   const result = Flowermodel.find(query).populate({
     path: 'createdBy',
@@ -69,7 +79,9 @@ const updateFlowerIntoDB = async (id: string, payload: Partial<TFlower>) => {
 };
 
 const deleteFlowerFromDB = async (id: string) => {
+  console.log(id);
   const Flowerdata = await Flowermodel.findById(id);
+  console.log(Flowerdata);
   const user = await User.isUserExistsById(Flowerdata?.createdBy);
   if (!user) {
     throw new AppError(httpStatus.NOT_FOUND, 'This user is not found !');

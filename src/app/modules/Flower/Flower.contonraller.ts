@@ -3,6 +3,7 @@ import catchAsync from '../../utils/catchAsync';
 import { Flowerservise } from './Flower.service';
 import httpStatus from 'http-status';
 
+
 const createFlower = catchAsync(async (req, res) => {
   const payload = req.body;
   const userdata = req.user;
@@ -17,13 +18,13 @@ const createFlower = catchAsync(async (req, res) => {
 const getallFlower = catchAsync(async (req, res) => {
   const querydata = req.query;
   const result = await Flowerservise.getFlowerIntoDB(querydata);
-  if (result.length === 0) {
-    throw new Error('No matching flowers found.');
-  }
+  // if (result.length === 0) {
+  //   throw new AppError(httpStatus.NOT_FOUND,'No matching flowers found.');
+  // }
   sendResponse(res, {
     statusCode: 201,
     success: true,
-    message: 'Flower uplode successfully',
+    message: 'Flower Find successfully',
     data: result,
   });
 });
@@ -41,7 +42,7 @@ const updateFlower = catchAsync(async (req, res) => {
 });
 
 const deleteFlower = catchAsync(async (req, res) => {
-  const { id } = req.params;
+  const  {id}  = req.params;
   const result = await Flowerservise.deleteFlowerFromDB(id);
   sendResponse(res, {
     statusCode: httpStatus.OK,
@@ -51,9 +52,7 @@ const deleteFlower = catchAsync(async (req, res) => {
   });
 });
 const BulkDeleteFlower = catchAsync(async (req, res) => {
-  const commingId = req.body;
-  const arryOfIdString = commingId.ids;
-  const result = await Flowerservise.BulkDeleteFlowersFromDB(arryOfIdString);
+  const result = await Flowerservise.BulkDeleteFlowersFromDB(req.body);
   sendResponse(res, {
     statusCode: httpStatus.OK,
     success: true,
