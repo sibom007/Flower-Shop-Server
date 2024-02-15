@@ -32,7 +32,6 @@ const getallFlower = catchAsync(async (req, res) => {
 const updateFlower = catchAsync(async (req, res) => {
   const { id } = req.params;
   const result = await Flowerservise.updateFlowerIntoDB(id, req.body);
-
   sendResponse(res, {
     statusCode: httpStatus.OK,
     success: true,

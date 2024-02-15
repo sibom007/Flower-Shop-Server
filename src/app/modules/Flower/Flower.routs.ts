@@ -30,8 +30,8 @@ router.put('/:id', auth(USER_ROLE.manager), FlowerControllers.deleteFlower);
 router.put('/', auth(USER_ROLE.manager), FlowerControllers.BulkDeleteFlower);
 router.get(
   '/userId/:id',
-  auth(USER_ROLE.user),
+  auth(USER_ROLE.user,USER_ROLE.manager),
   FlowerControllers.getUserFlowerById,
 );
-router.get('/:id', auth(USER_ROLE.user), FlowerControllers.getFlowerById);
+router.get('/:id', auth(USER_ROLE.user,USER_ROLE.manager), FlowerControllers.getFlowerById);
 export const FlowerRoutes = router;

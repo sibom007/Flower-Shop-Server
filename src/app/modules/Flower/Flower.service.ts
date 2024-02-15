@@ -5,6 +5,7 @@ import { Flowermodel } from './Flower.model';
 import AppError from '../../errors/AppError';
 import httpStatus from 'http-status';
 import mongoose from 'mongoose';
+import { string } from 'zod';
 const createFlowerIntoDB = async (payload: TFlower, userdata: JwtPayload) => {
   const user = await User.findOne({ username: userdata.username });
   payload.createdBy = user?._id;
@@ -32,8 +33,8 @@ const getFlowerIntoDB = async (filters: Record<string, any>) => {
  
 
   if (filters.color) {
-    const lowercaseColor = filters.color.toLowerCase();
-    query.color = lowercaseColor;
+    // const lowercaseColor = filters.color.toLowerCase();
+    query.color = filters.color;
   }
 
   if (filters.type) {
