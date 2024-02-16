@@ -5,7 +5,6 @@ import { Flowermodel } from './Flower.model';
 import AppError from '../../errors/AppError';
 import httpStatus from 'http-status';
 import mongoose from 'mongoose';
-import { string } from 'zod';
 const createFlowerIntoDB = async (payload: TFlower, userdata: JwtPayload) => {
   const user = await User.findOne({ username: userdata.username });
   payload.createdBy = user?._id;
@@ -13,7 +12,6 @@ const createFlowerIntoDB = async (payload: TFlower, userdata: JwtPayload) => {
   const result = Flowermodel.create(payload);
   return result;
 };
-
 const getFlowerIntoDB = async (filters: Record<string, any>) => {
   const query: any = { isDeleted: false };
 
@@ -59,19 +57,6 @@ const getFlowerIntoDB = async (filters: Record<string, any>) => {
   return result;
 };
 
-// const getFlowerIntoDB = async (filters: Record<string, any>) => {
-//   let query = Flowermodel.find({ isDeleted: false });
-
-//   if (filters.color) {
-//     query = query.where('color').equals(filters.color);
-//   }
-//   query.populate({
-//     path: 'createdBy',
-//     select: 'username email role updatedAt createdAt',
-//   });
-//   return query;
-// };
-
 const updateFlowerIntoDB = async (id: string, payload: Partial<TFlower>) => {
   const result = await Flowermodel.findByIdAndUpdate({ _id: id }, payload, {
     new: true,
@@ -80,9 +65,7 @@ const updateFlowerIntoDB = async (id: string, payload: Partial<TFlower>) => {
 };
 
 const deleteFlowerFromDB = async (id: string) => {
-  console.log(id);
   const Flowerdata = await Flowermodel.findById(id);
-  console.log(Flowerdata);
   const user = await User.isUserExistsById(Flowerdata?.createdBy);
   if (!user) {
     throw new AppError(httpStatus.NOT_FOUND, 'This user is not found !');
@@ -179,6 +162,9 @@ const getUserFlowerbyId = async (userId: string) => {
   });
   return flowers;
 };
+
+
+
 
 export const Flowerservise = {
   createFlowerIntoDB,

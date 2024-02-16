@@ -11,10 +11,11 @@ const createFlower = catchAsync(async (req, res) => {
   sendResponse(res, {
     statusCode: 201,
     success: true,
-    message: 'Flower uplode successfully',
+    message: 'Flower Create successfully',
     data: result,
   });
 });
+
 const getallFlower = catchAsync(async (req, res) => {
   const querydata = req.query;
   const result = await Flowerservise.getFlowerIntoDB(querydata);
