@@ -7,7 +7,7 @@ export interface TUser {
   username: string;
   email: string;
   password: string;
-  role: 'user' | "manager";
+  role: 'user' | "manager" | "admin";
   passwordHistory: {
     passwordHash: string;
     timestamp: Date;

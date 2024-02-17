@@ -14,6 +14,11 @@ router.post(
   validateRequest(userzodvalidation.UserSchemaValidations),
   UserControllers.createUser,
 );
+router.put(
+  '/updateRole',
+  auth(USER_ROLE.admin,USER_ROLE.manager),
+  UserControllers.updateUser,
+);
 
 router.get(
   '/TotalUser',

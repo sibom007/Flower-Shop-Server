@@ -5,7 +5,7 @@ import { TUser } from './user.interface';
 import { User } from './user.model';
 
 const createUserIntoDB = async (payload: TUser) => {
-  payload.role = payload.role || USER_ROLE.user || USER_ROLE.manager;
+  payload.role = payload.role || USER_ROLE.user || USER_ROLE.manager || USER_ROLE.admin;
   payload.password = await bcrypt.hash(
     payload.password,
     Number(config.bcrypt_salt_rounds),
@@ -21,6 +21,15 @@ const createUserIntoDB = async (payload: TUser) => {
   const result = User.create(payload);
   return result;
 };
+
+const UpdateUserIntoDB = async (id: string, payload: Partial<TUser>) => {
+  const result = await User.findByIdAndUpdate({ _id: id }, payload, {
+    new: true,
+  })
+  return result;
+};
+
+
 
 const TotalUserIntoDB = async () => {
   const result = User.find();
@@ -43,5 +52,6 @@ const TodayUserIntoDB = async () => {
 export const userservise = {
   createUserIntoDB,
   TotalUserIntoDB,
-  TodayUserIntoDB
+  TodayUserIntoDB,
+  UpdateUserIntoDB
 };

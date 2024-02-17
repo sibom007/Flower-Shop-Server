@@ -21,7 +21,7 @@ const userSchema = new Schema<TUser, UserModel>(
     needPasswordChange: { type: Boolean, },
     role: {
       type: String,
-      enum: [USER_ROLE.user, USER_ROLE.manager],
+      enum: [USER_ROLE.user, USER_ROLE.manager, USER_ROLE.admin],
     },
     passwordHistory: [
       {
