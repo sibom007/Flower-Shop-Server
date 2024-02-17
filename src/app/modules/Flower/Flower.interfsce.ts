@@ -10,5 +10,6 @@ export type TFlower = {
   type: string[];
   size: 'big' | 'medium' | 'small';
   fragrance: string;
+  Fpoint: number;
   isDeleted: boolean;
 };

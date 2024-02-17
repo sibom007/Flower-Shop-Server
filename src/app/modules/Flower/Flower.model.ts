@@ -12,6 +12,11 @@ const FlowerSchema = new Schema<TFlower>(
       type: Number,
       required: true,
     },
+    Fpoint: {
+      type: Number,
+      required: true,
+      default: 0
+    },
     quantity: {
       type: Number,
       required: true,

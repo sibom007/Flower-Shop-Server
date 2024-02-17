@@ -48,6 +48,17 @@ const Yearlysales = catchAsync(async (req, res) => {
     data: result,
   });
 });
+const PointUpdate = catchAsync(async (req, res) => {
+  const { FlowerId } = req.body
+  const { userId } = req.body
+  await Saleservice.PointupdateIntoDB(FlowerId, userId);
+  sendResponse(res, {
+    statusCode: 201,
+    success: true,
+    message: 'Point update',
+    data: null,
+  });
+});
 
 export const salecontorler = {
   createSale,
@@ -55,4 +66,5 @@ export const salecontorler = {
   monthlysales,
   dailysales,
   Yearlysales,
+  PointUpdate
 };

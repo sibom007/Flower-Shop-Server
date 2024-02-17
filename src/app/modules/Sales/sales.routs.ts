@@ -14,4 +14,5 @@ router.get('/sales/week', salecontorler.Weeklysales);
 router.get('/sales/month', salecontorler.monthlysales);
 router.get('/sales/daily', salecontorler.dailysales);
 router.get('/sales/year', salecontorler.Yearlysales);
+router.patch('/sales/pointUpdate', salecontorler.PointUpdate);
 export const salesrouts = router;

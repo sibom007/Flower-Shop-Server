@@ -21,6 +21,10 @@ router.put(
 );
 
 router.get(
+  '/SingleUser/:id',
+  UserControllers.singleUser,
+);
+router.get(
   '/TotalUser',
   UserControllers.totalUser,
 );

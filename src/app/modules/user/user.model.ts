@@ -13,6 +13,11 @@ const userSchema = new Schema<TUser, UserModel>(
       required: true,
       unique: true,
     },
+    UFpoint: {
+      type: Number,
+      required: true,
+      default: 0
+    },
     password: {
       type: String,
       required: true,

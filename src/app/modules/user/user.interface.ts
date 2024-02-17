@@ -12,7 +12,8 @@ export interface TUser {
     passwordHash: string;
     timestamp: Date;
   }[];
-  needPasswordChange: boolean
+  needPasswordChange: boolean,
+  UFpoint: number;
   createdAt?: Date;
   updatedAt?: Date;
 }

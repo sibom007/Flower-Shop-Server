@@ -25,6 +25,17 @@ const updateUser = catchAsync(async (req, res) => {
   });
 });
 
+const singleUser = catchAsync(async (req, res) => {
+  const { id } = req.params
+  const result = await userservise.SingleUserIntoDB(id);
+  sendResponse(res, {
+    statusCode: 201,
+    success: true,
+    message: 'Single User',
+    data: result,
+  });
+});
+
 const totalUser = catchAsync(async (req, res) => {
   const result = await userservise.TotalUserIntoDB();
   sendResponse(res, {
@@ -50,5 +61,6 @@ export const UserControllers = {
   createUser,
   totalUser,
   todayUser,
-  updateUser
+  updateUser,
+  singleUser
 };

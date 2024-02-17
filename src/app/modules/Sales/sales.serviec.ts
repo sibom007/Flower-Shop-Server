@@ -3,6 +3,7 @@ import AppError from '../../errors/AppError';
 import { Flowermodel } from '../Flower/Flower.model';
 import { TSale } from './sales.interface';
 import { salemodel } from './sales.model';
+import { User } from '../user/user.model';
 
 const createSaleIntoDB = async (payload: TSale) => {
   const { flowerId, quantitySold, date } = payload;
@@ -11,7 +12,6 @@ const createSaleIntoDB = async (payload: TSale) => {
     select: 'username',
   });
   const buyerName = (flower?.createdBy as any)?.username || 'Unknown'; // Cast createdBy to any type
-
   if (!flower) {
     throw new AppError(httpStatus.BAD_REQUEST, 'Flower not found');
   }
@@ -32,9 +32,9 @@ const createSaleIntoDB = async (payload: TSale) => {
   }
   flower.quantity -= quantitySold;
   if (flower.quantity === 0) {
-    await Flowermodel.findByIdAndUpdate(flowerId, { isDeleted: true }); // Remove flower from inventory if quantity reaches zero
+    await Flowermodel.findByIdAndUpdate(flowerId, { isDeleted: true });
   } else {
-    await flower.save(); // Save the updated flower document to the database
+    await flower.save(); 
   }
   return result;
 };
@@ -131,10 +131,25 @@ const YearlysalesInInvontory = async () => {
   return yearlySale;
 };
 
+const PointupdateIntoDB = async (id: string, userId: number) => {
+
+  const user = await User.findById(userId)
+  const Flower = await Flowermodel.findById(id)
+
+  if (!user || !Flower) {
+    throw new Error("User or Flower not found");
+  }
+  const newUpoint = user.UFpoint + Flower.Fpoint;
+  user.UFpoint = newUpoint;
+  await user.save();
+  return;
+};
+
 export const Saleservice = {
   createSaleIntoDB,
   WeeklysalesInInvontory,
   MonthlysalesInInvontory,
   DailysalesInInvontory,
   YearlysalesInInvontory,
+  PointupdateIntoDB
 };

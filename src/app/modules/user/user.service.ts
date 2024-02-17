@@ -31,6 +31,10 @@ const UpdateUserIntoDB = async (id: string, payload: Partial<TUser>) => {
 
 
 
+const SingleUserIntoDB = async (id:string) => {
+  const result = User.findById(id);
+  return result;
+};
 const TotalUserIntoDB = async () => {
   const result = User.find();
   return result;
@@ -53,5 +57,6 @@ export const userservise = {
   createUserIntoDB,
   TotalUserIntoDB,
   TodayUserIntoDB,
-  UpdateUserIntoDB
+  UpdateUserIntoDB,
+  SingleUserIntoDB
 };
