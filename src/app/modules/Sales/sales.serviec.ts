@@ -1,8 +1,8 @@
 import httpStatus from 'http-status';
 import AppError from '../../errors/AppError';
 import { Flowermodel } from '../Flower/Flower.model';
-import { TSale } from './sales.interface';
-import { salemodel } from './sales.model';
+import { TCoupon, TSale } from './sales.interface';
+import { CouponModel, salemodel } from './sales.model';
 import { User } from '../user/user.model';
 
 const createSaleIntoDB = async (payload: TSale) => {
@@ -145,11 +145,25 @@ const PointupdateIntoDB = async (id: string, userId: number) => {
   return;
 };
 
+const CouponIntoDB = async (payload: TCoupon) => {
+  const randomNum = Math.random().toString(36).substring(2, 10) + Math.random().toString(36).substring(2, 10);
+  payload.CouponCode = String(randomNum)
+  const result = await CouponModel.create(payload);
+  return result;
+};
+
+const GetCouponIntoDB = async () => {
+  const result = await CouponModel.find();
+  return result;
+};
+
 export const Saleservice = {
   createSaleIntoDB,
   WeeklysalesInInvontory,
   MonthlysalesInInvontory,
   DailysalesInInvontory,
   YearlysalesInInvontory,
-  PointupdateIntoDB
+  PointupdateIntoDB,
+  CouponIntoDB,
+  GetCouponIntoDB
 };

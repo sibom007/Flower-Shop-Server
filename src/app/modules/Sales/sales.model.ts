@@ -13,4 +13,17 @@ const saleSchema = new Schema({
   },
 });
 
+const CouponSchema = new Schema({
+  CreateBy: {
+    type: Schema.Types.ObjectId,
+    ref: 'User',
+  },
+  CouponCode: String,
+  CouponDiscount: Number,
+});
+
+
+
+
 export const salemodel = model('Sale', saleSchema);
+export const CouponModel = model('Coupon', CouponSchema);

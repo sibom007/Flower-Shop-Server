@@ -10,6 +10,10 @@ router.post(
   validateRequest(saleszodvalidation.salesSchemaValidations),
   salecontorler.createSale,
 );
+router.post('/sales/createCoupon', validateRequest(saleszodvalidation.couponSchemaValidations), salecontorler.couponcreate);
+router.get('/sales/getCoupon', salecontorler.getcoupon);
+
+
 router.get('/sales/week', salecontorler.Weeklysales);
 router.get('/sales/month', salecontorler.monthlysales);
 router.get('/sales/daily', salecontorler.dailysales);
