@@ -157,6 +157,14 @@ const GetCouponIntoDB = async () => {
   return result;
 };
 
+const VeryfyCouponIntoDB = async (payload: string) => {
+  const result = await CouponModel.findOne({ CouponCode: payload });
+  if (result === null) {
+    throw new AppError(httpStatus.BAD_REQUEST, "Copen has not found")
+  }
+  return result
+};
+
 export const Saleservice = {
   createSaleIntoDB,
   WeeklysalesInInvontory,
@@ -165,5 +173,6 @@ export const Saleservice = {
   YearlysalesInInvontory,
   PointupdateIntoDB,
   CouponIntoDB,
-  GetCouponIntoDB
+  GetCouponIntoDB,
+  VeryfyCouponIntoDB
 };

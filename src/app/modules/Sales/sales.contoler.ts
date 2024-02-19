@@ -85,6 +85,17 @@ const getcoupon = catchAsync(async (req, res) => {
   });
 });
 
+const varyfycoupon = catchAsync(async (req, res) => {
+  const { CouponCode } = req.params
+  const result = await Saleservice.VeryfyCouponIntoDB(CouponCode);
+  sendResponse(res, {
+    statusCode: 201,
+    success: true,
+    message: 'Coupon varyfyed',
+    data: result
+  });
+});
+
 export const salecontorler = {
   createSale,
   Weeklysales,
@@ -94,4 +105,5 @@ export const salecontorler = {
   PointUpdate,
   couponcreate,
   getcoupon,
+  varyfycoupon,
 };

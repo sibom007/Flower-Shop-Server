@@ -12,6 +12,7 @@ router.post(
 );
 router.post('/sales/createCoupon', validateRequest(saleszodvalidation.couponSchemaValidations), salecontorler.couponcreate);
 router.get('/sales/getCoupon', salecontorler.getcoupon);
+router.get('/sales/varyfyCoupon/:CouponCode', salecontorler.varyfycoupon);
 
 
 router.get('/sales/week', salecontorler.Weeklysales);
