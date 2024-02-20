@@ -94,27 +94,17 @@ const deleteFlowerFromDB = async (id: string) => {
 const BulkDeleteFlowersFromDB = async (ids: string[]) => {
   const deletedFlowers = [];
   const session = await mongoose.startSession();
-
   try {
     session.startTransaction();
 
     for (const id of ids) {
-      const flowerData = await Flowermodel.findById(id);
-      if (!flowerData) {
+      const Flowerdata = await Flowermodel.findById(id);
+      if (!Flowerdata) {
         throw new AppError(
           httpStatus.NOT_FOUND,
           `Flower with ID ${id} not found`,
         );
       }
-
-      const user = await User.isUserExistsById(flowerData.createdBy);
-      if (!user) {
-        throw new AppError(
-          httpStatus.NOT_FOUND,
-          `User for flower with ID ${id} not found`,
-        );
-      }
-
       const deletedFlower = await Flowermodel.findByIdAndUpdate(
         id,
         { isDeleted: true },
@@ -135,6 +125,7 @@ const BulkDeleteFlowersFromDB = async (ids: string[]) => {
 
     return deletedFlowers;
   } catch (error) {
+    console.log(error);
     await session.abortTransaction();
     await session.endSession();
     throw new Error('Failed to delete flowers');
